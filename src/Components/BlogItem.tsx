@@ -1,21 +1,12 @@
 import Image, { StaticImageData } from "next/image";
 import { assets } from "../../Assets/assets";
 import Link from "next/link";
+import { BlogType } from "./BlogList";
 
-export type BlogItemPropsType = {
-  id: number;
-  title: string;
-  description: string;
-  image: StaticImageData;
-  date: number;
-  category: string;
-  author: string;
-  author_img: StaticImageData;
-};
-const BlogItem = ({ blogData }: { blogData: BlogItemPropsType }) => {
+const BlogItem = ({ blogData }: { blogData: BlogType }) => {
   return (
     <div className="max-w-[330px] sm:max-w-[300px] bg-white hover:shadow-[-7px_7px_0px_#000000] border border-black">
-      <Link href={`/blog/${blogData.id}`}>
+      <Link href={`/blog/${blogData._id}`}>
         <Image
           src={blogData.image}
           alt="image"
@@ -36,7 +27,7 @@ const BlogItem = ({ blogData }: { blogData: BlogItemPropsType }) => {
         </p>
 
         <Link
-          href={`/blog/${blogData.id}`}
+          href={`/blog/${blogData._id}`}
           className="inline-flex items-center gap-2 cursor-pointer"
         >
           <span className="font-semibold text-center text-xs">Read More </span>

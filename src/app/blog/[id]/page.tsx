@@ -1,21 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { assets, blog_data } from "../../../../Assets/assets";
-import { BlogItemPropsType } from "@/Components/BlogItem";
 import Image from "next/image";
 import Footter from "@/Components/Footter";
 import Link from "next/link";
+import { BlogType } from "@/Components/BlogList";
+import axios from "axios";
 
 const BlogDetail = ({ params }: { params: { id: string } }) => {
   const id = params.id;
-  const [data, setData] = useState<BlogItemPropsType | null>(null);
+  const [data, setData] = useState<BlogType | null>(null);
 
-  const fetchBlogData = () => {
-    const blog = blog_data.find((blog) => blog.id == Number(id));
-    if (blog) {
-      setData(blog);
-      return;
-    }
+  const fetchBlogData = async () => {
+    const response = await axios.get("/api/blog", {
+      params: {
+        id,
+      },
+    });
+
+    setData(response.data.blog);
   };
   useEffect(() => {
     fetchBlogData();
@@ -47,7 +50,7 @@ const BlogDetail = ({ params }: { params: { id: string } }) => {
             {data?.title}
           </h1>
           <Image
-            src={data.author_img}
+            src={data.authorImg}
             alt=""
             width={60}
             height={60}
